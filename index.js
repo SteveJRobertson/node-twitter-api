@@ -2,7 +2,7 @@
     var Twitter = require('twitter');
     var express = require('express');
     var app = express();
-    var method = 'search/tweets';
+    var methods = require('./methods');
 
     var client = new Twitter({
         consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -11,38 +11,47 @@
         access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
     });
 
-    var methods = [
-        'statuses/mentions_timeline',
-        'statuses/home_timeline',
-        'statuses/retweets_of_me',
-        'search/tweets',
-        'lists/statuses',
-        'statuses/retweets/:id',
-    ];
-
-    var twitterAPICall = function(method) {
+    var twitterAPICall = function(methodObj) {
         return function(req, res) {
-            var params = req.query;
+            var params = req.query,
+                method = methodObj.method,
+                resource = methodObj.resource,
+                json = {};
             
             if (Object.keys(req.params).length === 1) {
-                method = method.replace(/:id/, req.params.id);
+                if (typeof req.params.id !== 'undefined') {
+                    resource = resource.replace(/:id/, req.params.id);
+                }
+
+                if (typeof req.params.slug !== 'undefined') {
+                    resource = resource.replace(/:slug/, req.params.slug);
+                }
             }
 
-            client.get(method, params, function(error, tweets, response) {
-                var json = {};
-                if (error) {
-                    json = error;
-                } else {
-                    json = tweets;
-                }
-                
-                res.json(json);
-            });
+            if (method === 'GET') {
+                client.get(resource, params, function(error, tweets, response) {
+                    data = processData(tweets, error);
+                    res.json(data);
+                });
+            } else if (method === 'POST') {
+                client.post(resource, params, function(error, tweets, response) {
+                    data = processData(tweets, error);
+                    res.json(data);
+                });
+            }
         }
     }
 
+    var processData = function(data, error) {
+        return (error) ? error : data;
+    }
+
     for (var i in methods) {
-        app.get('/' + methods[i], twitterAPICall(methods[i]));
+        if (methods[i].method === 'GET') {
+            app.get('/' + methods[i].resource, twitterAPICall(methods[i]));
+        } else if (methods[i].method === 'POST') {
+            app.post('/' + methods[i].resource, twitterAPICall(methods[i]));
+        }
     }
 
     var server = app.listen(process.env.PORT || 8081, function() {
