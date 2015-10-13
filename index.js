@@ -29,7 +29,9 @@
             }
 
             client.get(method, params, function(error, tweets, response) {
-                res.writeHead(response.toString(), {"Content-type": "application/json"});
+                console.log(response);
+                res.sendStatus(response.toString());
+                /*res.writeHead({'Content-type': 'application/json'});*/
                 var json = {};
                 if (error) {
                     json = JSON.stringify(error);
