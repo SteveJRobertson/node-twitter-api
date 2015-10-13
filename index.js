@@ -29,17 +29,14 @@
             }
 
             client.get(method, params, function(error, tweets, response) {
-                console.log(response);
-                res.sendStatus(response.toString());
-                /*res.writeHead({'Content-type': 'application/json'});*/
                 var json = {};
                 if (error) {
-                    json = JSON.stringify(error);
+                    json = error;
                 } else {
-                    json = JSON.stringify(tweets);
+                    json = tweets;
                 }
-                res.write(json);
-                res.end();
+                
+                res.json(json);
             });
         }
     }
