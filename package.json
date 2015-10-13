@@ -1,0 +1,30 @@
+{
+  "name": "node-twitter-api",
+  "version": "0.1.0",
+  "description": "Node web server for querying the Twitter API.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevejrobertson/node-twitter-api.git"
+  },
+  "keywords": [
+    "node",
+    "rest",
+    "twitter",
+    "api"
+  ],
+  "author": "Steve Robertson <stevejr@steverobertson.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stevejrobertson/node-twitter-api/issues"
+  },
+  "homepage": "https://github.com/stevejrobertson/node-twitter-api#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "twitter": "^1.2.5"
+  }
+}
