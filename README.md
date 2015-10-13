@@ -32,9 +32,9 @@ If your app is being deployed to Heroku, the Twitter credentials can be added as
 
 This server can query any of the [Twitter REST APIs](https://dev.twitter.com/rest/public) by passing the API resource as the path of the server URL. Any parameters should be added as query parameters to the end of the URL. Please remember to URL encode any parameters you pass to the server.
 
-The example below shows how to query the search API for the hashtag '#twitterapi'. Note the URL encoding of '#' to '%23'
+The example below shows how to query the search API locally for the hashtag '#twitterapi'. Note the URL encoding of '#' to '%23'
 
 ```
-http://[SERVER]:[PORT]/search/tweets?q=%23twitterapi
+http://localhost:8081/search/tweets?q=%23twitterapi
 ```
 Please refer to the relevant [Twitter API](https://dev.twitter.com/rest/public) page to reference the relevant parameters for each API call.
