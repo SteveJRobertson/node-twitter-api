@@ -43,7 +43,7 @@
                         "error": response.statusMessage
                     });
                 }, function(data) {
-                    res.json(JSON.parse(data));
+                    res.jsonp(JSON.parse(data));
                 });
             } else if (method === 'POST') {
                 client.postCustomApiCall('/' + resource + '.json', params, function(error, response, body) {
@@ -51,7 +51,7 @@
                         "error": response.statusMessage
                     });
                 }, function(data) {
-                    res.json(JSON.parse(data));
+                    res.jsonp(JSON.parse(data));
                 });
             }
         }
