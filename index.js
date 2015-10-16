@@ -20,6 +20,7 @@
     var twitterAPICall = function(methodObj) {
         return function(req, res) {
             var params = req.query,
+                callback = params.callback,
                 method = methodObj.method,
                 resource = methodObj.resource,
                 data = {};
@@ -43,8 +44,9 @@
                         "error": response.statusMessage
                     });
                 }, function(data) {
-                    res.set('Content-Type', 'application/javascript');
-                    res.jsonp(JSON.parse(data));
+                    data = JSON.parse(data);
+                    res.set('Content-Type', 'application/json')
+                    res.jsonp(callback + '(' + JSON.stringify(data) + ');');
                 });
             } else if (method === 'POST') {
                 client.postCustomApiCall('/' + resource + '.json', params, function(error, response, body) {
@@ -52,6 +54,7 @@
                         "error": response.statusMessage
                     });
                 }, function(data) {
+                    res.set('Content-Type', 'application/json')
                     res.jsonp(JSON.parse(data));
                 });
             }
