@@ -46,7 +46,7 @@
                 }, function(data) {
                     data = JSON.parse(data);
                     res.set('Content-Type', 'application/json')
-                    res.jsonp(callback + '(' + JSON.stringify(data) + ');');
+                    res.send(callback + '(' + JSON.stringify(data) + ');');
                 });
             } else if (method === 'POST') {
                 client.postCustomApiCall('/' + resource + '.json', params, function(error, response, body) {
