@@ -28,6 +28,8 @@
 
     var twitterAPICall = function(methodObj) {
         return function(req, res) {
+            console.log(req);
+
             var params = req.query,
                 callback = params.callback,
                 method = methodObj.method,
