@@ -28,15 +28,11 @@
 
     var twitterAPICall = function(methodObj) {
         return function(req, res) {
-            console.log(req);
-
             var params = req.query,
-                callback = params.callback,
                 method = methodObj.method,
                 resource = methodObj.resource,
                 data = {};
 
-                delete params.callback;
                 params.q = decodeURIComponent(params.q);
                 
             if (Object.keys(req.params).length === 1) {
@@ -57,7 +53,7 @@
                 }, function(data) {
                     data = JSON.parse(data);
                     res.set('Content-Type', 'application/json')
-                    res.send(callback + '(' + JSON.stringify(data) + ');');
+                    res.send('results');
                 });
             } else if (method === 'POST') {
                 client.postCustomApiCall('/' + resource + '.json', params, function(error, response, body) {
