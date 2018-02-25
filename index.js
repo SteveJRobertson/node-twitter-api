@@ -18,7 +18,11 @@
     }));
 
     app.use(function (req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', 'http://sr.digital');
+        var allowedOrigins = ['http://localhost:3000', 'http://sr.digital'];
+        var origin = req.headers.origin;
+        if(allowedOrigins.indexOf(origin) > -1){
+            res.setHeader('Access-Control-Allow-Origin', origin);
+        }
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
         res.setHeader('Access-Control-Allow-Credentials', false);
