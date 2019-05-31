@@ -18,7 +18,7 @@
     }));
 
     app.use(function (req, res, next) {
-        var allowedOrigins = ['http://localhost:3000', 'http://sr.digital', 'https://sr.digital', 'https://jamdodger-*.herokuapp.com'];
+        var allowedOrigins = ['http://localhost:3000', 'http://sr.digital', 'https://sr.digital', 'https://jamdodger-*.herokuapp.com', 'https://codepen.io/SteveJRobertson'];
         var origin = req.headers.origin;
         if(allowedOrigins.indexOf(origin) > -1){
             res.setHeader('Access-Control-Allow-Origin', origin);
